@@ -24,10 +24,10 @@
 }
 
 .right-content .top {
-    height: 340px;
+    height: 250px;
 }
 
-.right-content .bottom a {
+.right-content .bottom button {
     padding: 15px 25px;
 }
 
@@ -107,5 +107,41 @@ footer ul li a:hover {
 .copyright {
     margin-left: 40px;
     padding: 20px 0px;
+}
+
+.about {
+    margin-top: 100px;
+}
+
+.about .row .col a i {
+    color: white;
+    font-size: 36pt;
+}
+
+.about .row .col a i:hover {
+    color: #f0ad4e;
+    font-size: 38pt;
+    transition: all .5s;
+}
+
+.btn-purple {
+    color: #fff;
+    background-color: #8758FF !important;
+}
+
+.btn-purple:hover, .modal-body .btn-success:hover  {
+    background-color: #FF731D !important;
+    transition: all .5s;
+}
+
+.btn-orange {
+    color: #fff;
+    background-color: #FFAB4C;
+}
+
+.modal-body a {
+    width: 150px;
+    padding: 10px 0px;
+    border: none;
 }
 
