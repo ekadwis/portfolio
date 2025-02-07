@@ -1,0 +1,128 @@
+* {
+  font-family: 'Poppins', serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  margin: 0px 20%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.top-left h2 {
+  line-height: 0.8;
+}
+
+.top-right img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 20px;
+}
+
+.gradient-line {
+  width: 60%; /* Ukuran garis */
+  height: 1px; /* Ketebalan garis */
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.2),
+    /* Gelap di kiri */ rgb(145, 145, 145),
+    /* Terang di tengah */ rgba(0, 0, 0, 0.2)
+  ); /* Gelap di kanan */
+  border-radius: 5px;
+}
+
+.gradient-line-footer {
+  width: 100%; /* Ukuran garis */
+  height: 1px; /* Ketebalan garis */
+  background: rgba(85, 84, 84, 0.8);
+  border-radius: 5px;
+}
+
+.embed-graph {
+  background-color: #212529;
+  color: #fff;
+}
+
+.contribution-graph {
+  background-color: #18181b;
+  padding: 20px 10px 0px 10px;
+}
+
+/* Agar iframe berfungsi dengan baik, pastikan tampilannya responsif */
+.contribution-graph iframe {
+  width: 100%; /* Menyesuaikan lebar dengan ukuran container */
+  height: auto; /* Menentukan tinggi iframe */
+  border: none; /* Menghapus border default iframe */
+  border-radius: 10px; /* Menambahkan sudut melengkung */
+}
+
+/* Menambahkan sedikit padding pada deskripsi */
+.deskripsi {
+  padding-bottom: 20px;
+}
+
+.about {
+  text-align: justify;
+}
+
+.about .list p {
+  font-size: 11pt;
+}
+
+.project a:hover {
+  color: aqua;
+}
+
+.list-project img {
+  height: 180px;
+  padding-top: 10px;
+  object-fit: contain;
+}
+
+.card {
+  background-color: #18181b;
+}
+
+.btn-title {
+  background-color: #2C2C2C;
+  color: #ccc;
+}
+
+.btn-title:hover {
+  color: #ffff;
+}
+
+.list-project .card-text, .list-project small a {
+  font-size: 9pt;
+}
+
+.list-certificate .card {
+  height: 280px;
+}
+
+ul {
+  list-style: none; /* Menghapus titik dari daftar */
+  padding: 0; /* Menghapus padding default */
+  margin: -15px 0px 0px 0px; /* Menghapus margin default */
+  display: flex; /* Menyusun elemen list secara horizontal */
+}
+
+li {
+  margin-right: 20px; /* Memberi jarak antar elemen list */
+}
+
+.footer a {
+  text-decoration: none; /* Menghapus garis bawah dari tautan */
+  color: white;
+  font-size: 15pt;
+}
+
+.contact a:hover { 
+  text-decoration: underline;
+  font-weight: bold;
+}
