@@ -13,7 +13,8 @@ Ini adalah website portofolio saya yang dibuat menggunakan **Bootstrap 5** dan *
 ## 🔧 Teknologi yang Digunakan  
 - **HTML5**  
 - **CSS3 & Bootstrap 5**  
-- **JavaScript**  
+- **JavaScript**
+- **Embed Github Contributions Graph**
 
 ## 📌 Cara Menggunakan  
 1. Clone repository ini:  
