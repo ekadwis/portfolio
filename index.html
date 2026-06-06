@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eka Dwi Saputra — Systems & Operations Builder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        body: ['Outfit', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      colors: {
+        bg:      '#1c1917',
+        surface: '#262220',
+        surface2:'#2f2a27',
+        line:    '#3a342f',
+        ink:     '#f5f1ea',
+        muted:   '#a8a097',
+        faint:   '#6f675f',
+        amber:   '#e8a55c',
+        amber2:  '#f0bd80',
+        sage:    '#8fae8b',
+      },
+    },
+  },
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#1c1917; }
+  ::selection { background:#e8a55c; color:#1c1917; }
+  /* grain texture */
+  .grain::before {
+    content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity:1; transform:none; }
+  .glow { background:radial-gradient(60% 60% at 70% 20%, rgba(232,165,92,.12), transparent 70%); }
+  .card-hover { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s; }
+  .card-hover:hover { transform: translateY(-6px); border-color:#e8a55c55; box-shadow:0 20px 50px -20px rgba(0,0,0,.7); }
+  .lang-hidden { display:none !important; }
+  .underline-grow { background-image:linear-gradient(#e8a55c,#e8a55c); background-size:0% 2px; background-repeat:no-repeat; background-position:0 100%; transition:background-size .35s ease; }
+  .underline-grow:hover { background-size:100% 2px; }
+  .marquee { animation: scroll 30s linear infinite; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+</style>
+</head>
+<body class="grain font-body text-ink antialiased relative overflow-x-hidden">
+
+<!-- ambient glow -->
+<div class="glow fixed inset-0 z-0 pointer-events-none"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-bg/70 border-b border-line/60">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display text-xl font-600 tracking-tight">eka<span class="text-amber">.</span></a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-muted">
+      <a href="#about" class="hover:text-ink transition" data-id="Tentang" data-en="About">Tentang</a>
+      <a href="#work" class="hover:text-ink transition" data-id="Keahlian" data-en="What I Do">Keahlian</a>
+      <a href="#projects" class="hover:text-ink transition" data-id="Proyek" data-en="Projects">Proyek</a>
+      <a href="#experience" class="hover:text-ink transition" data-id="Pengalaman" data-en="Experience">Pengalaman</a>
+      <a href="#contact" class="hover:text-ink transition" data-id="Kontak" data-en="Contact">Kontak</a>
+    </div>
+    <button id="langToggle" class="font-mono text-xs border border-line rounded-full px-3 py-1.5 text-muted hover:text-amber hover:border-amber transition">
+      <span id="langLabel">EN</span>
+    </button>
+  </div>
+</nav>
+
+<main class="relative z-10" id="top">
+
+<!-- ===== HERO ===== -->
+<section class="max-w-6xl mx-auto px-6 pt-36 pb-24 md:pt-44 md:pb-32">
+  <div class="grid md:grid-cols-12 gap-12 items-center">
+    <div class="md:col-span-8">
+      <p class="font-mono text-xs text-amber tracking-[0.3em] uppercase mb-6 reveal" data-id="Operations &amp; Systems Generalist" data-en="Operations &amp; Systems Generalist">Operations &amp; Systems Generalist</p>
+      <h1 class="font-display text-5xl md:text-7xl font-600 leading-[1.05] tracking-tight reveal">
+        Eka Dwi<br>Saputra
+      </h1>
+      <p class="mt-8 text-lg md:text-xl text-muted max-w-xl leading-relaxed reveal"
+         data-id="Saya membangun sistem internal yang membuat operasional tetap berjalan — dari kode, keuangan, sampai koordinasi tim. Satu orang, banyak peran."
+         data-en="I build the internal systems that keep operations running — from code to finance to team coordination. One person, many hats.">
+        Saya membangun sistem internal yang membuat operasional tetap berjalan — dari kode, keuangan, sampai koordinasi tim. Satu orang, banyak peran.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4 reveal">
+        <a href="#projects" class="bg-amber text-bg font-500 px-6 py-3 rounded-full hover:bg-amber2 transition" data-id="Lihat Proyek" data-en="View Projects">Lihat Proyek</a>
+        <a href="#contact" class="border border-line px-6 py-3 rounded-full text-muted hover:text-ink hover:border-muted transition" data-id="Hubungi Saya" data-en="Get in Touch">Hubungi Saya</a>
+      </div>
+    </div>
+    <div class="md:col-span-4 reveal">
+      <div class="relative">
+        <div class="absolute -inset-3 bg-amber/10 rounded-3xl blur-xl"></div>
+        <div class="relative aspect-[4/5] rounded-3xl border border-line overflow-hidden bg-surface">
+          <img src="https://i.postimg.cc/XJrMVpTT/image.png" alt="Eka Dwi Saputra" class="w-full h-full object-cover grayscale-[.2]">
+        </div>
+        <p class="font-mono text-[10px] text-faint mt-3 text-center">Eka Dwi Saputra</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== METRICS MARQUEE ===== -->
+<section class="border-y border-line/60 bg-surface/40 py-5 overflow-hidden">
+  <div class="flex whitespace-nowrap marquee">
+    <div class="flex items-center gap-12 px-6 font-mono text-sm text-muted shrink-0">
+      <span><span class="text-amber font-500">270+</span> <span data-id="siswa aktif/bulan" data-en="active students/mo">siswa aktif/bulan</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">20+</span> <span data-id="payroll karyawan/bulan" data-en="payroll staff/mo">payroll karyawan/bulan</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">1000+</span> <span data-id="order freelance sejak 2020" data-en="freelance orders since 2020">order freelance sejak 2020</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">8+</span> <span data-id="divisi yang dikoordinasi" data-en="divisions coordinated">divisi yang dikoordinasi</span></span><span class="text-faint">/</span>
+    </div>
+    <div class="flex items-center gap-12 px-6 font-mono text-sm text-muted shrink-0" aria-hidden="true">
+      <span><span class="text-amber font-500">270+</span> <span data-id="siswa aktif/bulan" data-en="active students/mo">siswa aktif/bulan</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">20+</span> <span data-id="payroll karyawan/bulan" data-en="payroll staff/mo">payroll karyawan/bulan</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">1000+</span> <span data-id="order freelance sejak 2020" data-en="freelance orders since 2020">order freelance sejak 2020</span></span><span class="text-faint">/</span>
+      <span><span class="text-amber font-500">8+</span> <span data-id="divisi yang dikoordinasi" data-en="divisions coordinated">divisi yang dikoordinasi</span></span><span class="text-faint">/</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-4">
+      <h2 class="font-display text-3xl md:text-4xl font-600 reveal" data-id="Tentang Saya" data-en="About Me">Tentang Saya</h2>
+    </div>
+    <div class="md:col-span-8 space-y-6 text-muted text-lg leading-relaxed reveal">
+      <p data-id="Halo, saya Putra — seorang generalis yang bekerja di persimpangan antara teknologi dan operasional. Saya terbiasa memegang banyak peran sekaligus: membangun sistem internal, mengelola keuangan, menangani HR, hingga mengoordinasi lintas divisi dan menjadi backup di posisi yang sedang kosong."
+         data-en="Hi, I'm Putra — a generalist working at the intersection of technology and operations. I'm used to wearing many hats at once: building internal systems, managing finances, handling HR, and coordinating across divisions while backing up whichever role needs a hand.">
+        Halo, saya Putra — seorang generalis yang bekerja di persimpangan antara teknologi dan operasional. Saya terbiasa memegang banyak peran sekaligus: membangun sistem internal, mengelola keuangan, menangani HR, hingga mengoordinasi lintas divisi dan menjadi backup di posisi yang sedang kosong.
+      </p>
+      <p data-id="Kekuatan utama saya ada di Web Programming dan Finance &amp; Accounting, tapi yang membuat saya berbeda adalah kemampuan membangun sendiri sistem yang menyelesaikan masalah bisnis nyata — bukan sekadar menulis kode, tapi mengerti kenapa kode itu dibutuhkan."
+         data-en="My core strengths are Web Programming and Finance &amp; Accounting, but what sets me apart is building the systems that solve real business problems myself — not just writing code, but understanding why the code is needed.">
+        Kekuatan utama saya ada di Web Programming dan Finance &amp; Accounting, tapi yang membuat saya berbeda adalah kemampuan membangun sendiri sistem yang menyelesaikan masalah bisnis nyata — bukan sekadar menulis kode, tapi mengerti kenapa kode itu dibutuhkan.
+      </p>
+      <p data-id="Saat ini saya juga menempuh S1 Sistem Informasi di Universitas Terbuka untuk melengkapi kompetensi formal."
+         data-en="I'm currently pursuing a Bachelor's in Information Systems at Universitas Terbuka to round out my formal qualifications.">
+        Saat ini saya juga menempuh S1 Sistem Informasi di Universitas Terbuka untuk melengkapi kompetensi formal.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT I DO (3 PILLARS) ===== -->
+<section id="work" class="max-w-6xl mx-auto px-6 py-20">
+  <p class="font-mono text-xs text-amber tracking-[0.3em] uppercase mb-3 reveal">// what i do</p>
+  <h2 class="font-display text-3xl md:text-4xl font-600 mb-14 reveal" data-id="Tiga Hal yang Saya Kuasai" data-en="Three Things I Do Well">Tiga Hal yang Saya Kuasai</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <div class="reveal card-hover bg-surface border border-line rounded-2xl p-8">
+      <div class="font-mono text-amber text-sm mb-5">01</div>
+      <h3 class="font-display text-2xl font-600 mb-4" data-id="Web Development" data-en="Web Development">Web Development</h3>
+      <p class="text-muted leading-relaxed mb-5"
+         data-id="Membangun sistem internal harian dengan Google Apps Script &amp; React.js — untuk finance, HR, customer support, education, dan operasional."
+         data-en="Building daily internal systems with Google Apps Script &amp; React.js — for finance, HR, customer support, education, and operations.">
+        Membangun sistem internal harian dengan Google Apps Script &amp; React.js — untuk finance, HR, customer support, education, dan operasional.
+      </p>
+      <div class="flex flex-wrap gap-2 font-mono text-xs">
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">React</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Apps Script</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">PHP</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">MySQL</span>
+      </div>
+    </div>
+
+    <div class="reveal card-hover bg-surface border border-line rounded-2xl p-8" style="transition-delay:.08s">
+      <div class="font-mono text-amber text-sm mb-5">02</div>
+      <h3 class="font-display text-2xl font-600 mb-4" data-id="Finance &amp; Accounting" data-en="Finance &amp; Accounting">Finance &amp; Accounting</h3>
+      <p class="text-muted leading-relaxed mb-5"
+         data-id="Invoice &amp; tagihan siswa, bukti kas masuk/keluar, approval pembayaran, payroll ~20 karyawan, PPh21 &amp; PPh23, serta dokumen offboarding."
+         data-en="Student invoicing, cash-in/out records, payment approvals, payroll for ~20 staff, PPh21 &amp; PPh23 taxes, and offboarding documents.">
+        Invoice &amp; tagihan siswa, bukti kas masuk/keluar, approval pembayaran, payroll ~20 karyawan, PPh21 &amp; PPh23, serta dokumen offboarding.
+      </p>
+      <div class="flex flex-wrap gap-2 font-mono text-xs">
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Payroll</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">PPh21/23</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Invoicing</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Cash Flow</span>
+      </div>
+    </div>
+
+    <div class="reveal card-hover bg-surface border border-line rounded-2xl p-8" style="transition-delay:.16s">
+      <div class="font-mono text-amber text-sm mb-5">03</div>
+      <h3 class="font-display text-2xl font-600 mb-4" data-id="Operasional &amp; HR" data-en="Operations &amp; HR">Operasional &amp; HR</h3>
+      <p class="text-muted leading-relaxed mb-5"
+         data-id="Rekrutmen, screening, interview, onboarding/offboarding, BPJS &amp; paklaring, koordinasi lintas divisi, dan memimpin tim intern."
+         data-en="Recruitment, screening, interviews, on/offboarding, BPJS &amp; reference letters, cross-division coordination, and leading the intern team.">
+        Rekrutmen, screening, interview, onboarding/offboarding, BPJS &amp; paklaring, koordinasi lintas divisi, dan memimpin tim intern.
+      </p>
+      <div class="flex flex-wrap gap-2 font-mono text-xs">
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Recruitment</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Onboarding</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Coordination</span>
+        <span class="bg-surface2 border border-line rounded-full px-3 py-1 text-faint">Leadership</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="flex items-end justify-between mb-14 reveal">
+    <div>
+      <p class="font-mono text-xs text-amber tracking-[0.3em] uppercase mb-3">// selected work</p>
+      <h2 class="font-display text-3xl md:text-4xl font-600" data-id="Proyek Pilihan" data-en="Selected Projects">Proyek Pilihan</h2>
+    </div>
+    <a href="editproyek.html" class="font-mono text-xs text-faint hover:text-amber transition hidden md:block">// kelola proyek →</a>
+  </div>
+
+  <div id="projectGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE TIMELINE ===== -->
+<section id="experience" class="max-w-6xl mx-auto px-6 py-28">
+  <p class="font-mono text-xs text-amber tracking-[0.3em] uppercase mb-3 reveal">// timeline</p>
+  <h2 class="font-display text-3xl md:text-4xl font-600 mb-14 reveal" data-id="Pengalaman" data-en="Experience">Pengalaman</h2>
+
+  <div class="space-y-10">
+
+    <!-- ===== EXPERIENCE ENTRY TEMPLATE — copy blok di bawah untuk nambah ===== -->
+    <div class="reveal grid md:grid-cols-12 gap-4 border-l-2 border-amber/40 pl-6 md:border-l-0 md:pl-0 pb-10 md:border-b md:border-line">
+      <div class="md:col-span-3">
+        <div class="font-mono text-sm text-amber mb-1">May 2024 — Present</div>
+        <div class="font-mono text-xs text-faint" data-id="± 1 tahun" data-en="± 1 year">± 1 tahun</div>
+      </div>
+      <div class="md:col-span-9">
+        <h3 class="font-display text-2xl font-600">Coordinator</h3>
+        <p class="text-amber/90 text-sm mb-4">Carrot Academy</p>
+        <p class="text-muted leading-relaxed mb-5" data-id="Memegang peran lintas-divisi sebagai penghubung antara teknologi, keuangan, dan operasional. Bertanggung jawab mengoordinasi kerja antar tim dan menjadi backup pada divisi yang sedang kosong — mulai dari pengembangan sistem, HR, finance, hingga customer support." data-en="A cross-divisional role bridging technology, finance, and operations. Responsible for coordinating teams and backing up vacant divisions — from systems development to HR, finance, and customer support.">Memegang peran lintas-divisi sebagai penghubung antara teknologi, keuangan, dan operasional. Bertanggung jawab mengoordinasi kerja antar tim dan menjadi backup pada divisi yang sedang kosong — mulai dari pengembangan sistem, HR, finance, hingga customer support.</p>
+
+        <p class="font-mono text-xs text-amber/80 mb-3 uppercase tracking-wider" data-id="Pengembangan Sistem" data-en="Systems Development">Pengembangan Sistem</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed mb-6">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Merancang dan membangun sistem internal harian menggunakan Google Apps Script dan React.js untuk delapan divisi: finance, customer support, education support, accounting, HRGA, marketing communication, operational, dan education." data-en="Designed and built daily internal systems using Google Apps Script and React.js for eight divisions: finance, customer support, education support, accounting, HRGA, marketing communication, operations, and education.">Merancang dan membangun sistem internal harian menggunakan Google Apps Script dan React.js untuk delapan divisi: finance, customer support, education support, accounting, HRGA, marketing communication, operational, dan education.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Melakukan maintenance rutin untuk memastikan seluruh sistem operasional berjalan lancar dan minim gangguan." data-en="Performed routine maintenance to keep all operational systems running smoothly with minimal downtime.">Melakukan maintenance rutin untuk memastikan seluruh sistem operasional berjalan lancar dan minim gangguan.</span></li>
+        </ul>
+
+        <p class="font-mono text-xs text-amber/80 mb-3 uppercase tracking-wider" data-id="HR & Administrasi (HRGA)" data-en="HR & General Affairs">HR & Administrasi (HRGA)</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed mb-6">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Menangani siklus rekrutmen penuh: penyusunan soal tes kandidat, screening, interview, hingga onboarding dan offboarding staff." data-en="Handled the full recruitment cycle: candidate test design, screening, interviews, and staff onboarding & offboarding.">Menangani siklus rekrutmen penuh: penyusunan soal tes kandidat, screening, interview, hingga onboarding dan offboarding staff.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Mengelola payroll untuk ±20 karyawan setiap bulan, termasuk perhitungan dan pelaporan PPh 21 dan PPh 23." data-en="Managed monthly payroll for ±20 employees, including PPh 21 and PPh 23 tax calculation and reporting.">Mengelola payroll untuk ±20 karyawan setiap bulan, termasuk perhitungan dan pelaporan PPh 21 dan PPh 23.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Mengurus administrasi kepegawaian seperti BPJS, paklaring, dan dokumen ketenagakerjaan lainnya." data-en="Managed employee administration including BPJS, reference letters (paklaring), and other employment documents.">Mengurus administrasi kepegawaian seperti BPJS, paklaring, dan dokumen ketenagakerjaan lainnya.</span></li>
+        </ul>
+
+        <p class="font-mono text-xs text-amber/80 mb-3 uppercase tracking-wider" data-id="Finance & Accounting" data-en="Finance & Accounting">Finance & Accounting</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed mb-6">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Membuat tagihan dan invoice untuk ±270 siswa aktif setiap bulan di lembaga les ilustrasi." data-en="Created billing and invoices for ±270 active students each month at the illustration course.">Membuat tagihan dan invoice untuk ±270 siswa aktif setiap bulan di lembaga les ilustrasi.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Membuat bukti kas masuk, mengecek pembayaran siswa, dan melakukan approval transaksi keuangan." data-en="Recorded cash-in proofs, verified student payments, and approved financial transactions.">Membuat bukti kas masuk, mengecek pembayaran siswa, dan melakukan approval transaksi keuangan.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Mengurus proses offboarding siswa, mulai dari kelengkapan dokumen hingga penyelesaian pembayaran yang belum dilunasi." data-en="Handled student offboarding, from document completion to settling outstanding payments.">Mengurus proses offboarding siswa, mulai dari kelengkapan dokumen hingga penyelesaian pembayaran yang belum dilunasi.</span></li>
+        </ul>
+
+        <p class="font-mono text-xs text-amber/80 mb-3 uppercase tracking-wider" data-id="Customer Support & Operasional" data-en="Customer Support & Operations">Customer Support & Operasional</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed mb-6">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Melayani ±270 siswa dan orang tua: booking jadwal, membalas chat WhatsApp, menjaga front office, serta memproses pembayaran via cash, debit, kredit, dan QRIS." data-en="Served ±270 students and parents: scheduling, WhatsApp support, front-office duties, and processing payments via cash, debit, credit, and QRIS.">Melayani ±270 siswa dan orang tua: booking jadwal, membalas chat WhatsApp, menjaga front office, serta memproses pembayaran via cash, debit, kredit, dan QRIS.</span></li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Membuat jadwal siswa ke mentor, mengelola absensi masuk/keluar siswa, dan menerbitkan sertifikat untuk siswa yang naik level." data-en="Built student-to-mentor schedules, managed student attendance, and issued certificates for students leveling up.">Membuat jadwal siswa ke mentor, mengelola absensi masuk/keluar siswa, dan menerbitkan sertifikat untuk siswa yang naik level.</span></li>
+        </ul>
+
+        <p class="font-mono text-xs text-amber/80 mb-3 uppercase tracking-wider" data-id="Kepemimpinan" data-en="Leadership">Kepemimpinan</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 text-[8px]">●</span><span data-id="Menjadi team leader bagi seluruh anak magang — menyiapkan pekerjaan, memantau, mengevaluasi, hingga menangani proses offboarding dan penyerahan data." data-en="Acted as team leader for all interns — preparing tasks, monitoring, evaluating, and handling their offboarding and data handover.">Menjadi team leader bagi seluruh anak magang — menyiapkan pekerjaan, memantau, mengevaluasi, hingga menangani proses offboarding dan penyerahan data.</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- ===== END TEMPLATE ===== -->
+
+    <div class="reveal grid md:grid-cols-12 gap-4 border-l-2 border-line pl-6 md:border-l-0 md:pl-0 pb-10 md:border-b md:border-line">
+      <div class="md:col-span-3">
+        <div class="font-mono text-sm text-muted mb-1">Dec 2022 — May 2024</div>
+        <div class="font-mono text-xs text-faint" data-id="± 1.5 tahun" data-en="± 1.5 years">± 1.5 tahun</div>
+      </div>
+      <div class="md:col-span-9">
+        <h3 class="font-display text-2xl font-600" data-id="Staff IT & Administrasi" data-en="IT & Administration Staff">Staff IT & Administrasi</h3>
+        <p class="text-muted text-sm mb-4">Carrot Academy</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed">
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Merancang dan membangun sistem berbasis Google Spreadsheet dengan Google Apps Script untuk kebutuhan kantor: absensi, pencatatan keuangan, modul siswa, bahan ajar, aplikasi SOP, dan sistem pendukung operasional lainnya." data-en="Designed and built Google Spreadsheet systems with Apps Script for office needs: attendance, finance records, student modules, teaching materials, SOP apps, and other operational support systems.">Merancang dan membangun sistem berbasis Google Spreadsheet dengan Google Apps Script untuk kebutuhan kantor: absensi, pencatatan keuangan, modul siswa, bahan ajar, aplikasi SOP, dan sistem pendukung operasional lainnya.</span></li>
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Melakukan maintenance rutin mingguan, bulanan, dan tahunan untuk memastikan seluruh sistem berjalan lancar." data-en="Performed weekly, monthly, and annual maintenance to ensure all systems ran smoothly.">Melakukan maintenance rutin mingguan, bulanan, dan tahunan untuk memastikan seluruh sistem berjalan lancar.</span></li>
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Bertugas sebagai finance: membuat dan mengirim invoice, mencatat bukti kas masuk dan keluar, serta mencocokkan data tagihan dengan bukti pembayaran." data-en="Served as finance: creating and sending invoices, recording cash in/out, and reconciling billing data against payment proofs.">Bertugas sebagai finance: membuat dan mengirim invoice, mencatat bukti kas masuk dan keluar, serta mencocokkan data tagihan dengan bukti pembayaran.</span></li>
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Memimpin tim intern administrasi untuk mengoordinasi pekerjaan input dan sortir data, serta menangani tugas administrasi harian lainnya." data-en="Led the admin intern team to coordinate data input and sorting, and handled other daily administrative tasks.">Memimpin tim intern administrasi untuk mengoordinasi pekerjaan input dan sortir data, serta menangani tugas administrasi harian lainnya.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal grid md:grid-cols-12 gap-4 border-l-2 border-line pl-6 md:border-l-0 md:pl-0 pb-10 md:border-b md:border-line">
+      <div class="md:col-span-3">
+        <div class="font-mono text-sm text-muted mb-1">Jun 2022 — Oct 2022</div>
+        <div class="font-mono text-xs text-faint" data-id="5 bulan" data-en="5 months">5 bulan</div>
+      </div>
+      <div class="md:col-span-9">
+        <h3 class="font-display text-2xl font-600">Junior Web Developer</h3>
+        <p class="text-muted text-sm mb-4">PT. Surya Putra Sukses</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed">
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Membantu pengembangan aplikasi web pajak untuk salah satu kota besar di Indonesia menggunakan CodeIgniter dan database MySQL." data-en="Contributed to a regional tax web app for a major Indonesian city using CodeIgniter and MySQL.">Membantu pengembangan aplikasi web pajak untuk salah satu kota besar di Indonesia menggunakan CodeIgniter dan database MySQL.</span></li>
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Berperan sebagai team leader untuk project web umrah yang dikembangkan dengan React.js." data-en="Served as team leader for an Umrah booking web project built with React.js.">Berperan sebagai team leader untuk project web umrah yang dikembangkan dengan React.js.</span></li>
+          <li class="flex gap-3"><span class="text-muted mt-1.5 text-[8px]">●</span><span data-id="Melakukan maintenance untuk beberapa project berbasis PHP dan JavaScript agar fungsionalitas dan performa tetap optimal." data-en="Maintained several PHP and JavaScript projects to keep functionality and performance optimal.">Melakukan maintenance untuk beberapa project berbasis PHP dan JavaScript agar fungsionalitas dan performa tetap optimal.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal grid md:grid-cols-12 gap-4 border-l-2 border-sage/40 pl-6 md:border-l-0 md:pl-0 pb-2">
+      <div class="md:col-span-3">
+        <div class="font-mono text-sm text-sage mb-1">2018 — Present</div>
+        <div class="font-mono text-xs text-faint" data-id="7+ tahun" data-en="7+ years">7+ tahun</div>
+      </div>
+      <div class="md:col-span-9">
+        <div class="flex items-center gap-3 flex-wrap">
+          <h3 class="font-display text-2xl font-600" data-id="Founder & Pengelola" data-en="Founder & Operator">Founder & Pengelola</h3>
+          <a href="https://zippystore.my.id" target="_blank" class="font-mono text-xs bg-sage/10 border border-sage/30 text-sage rounded-full px-3 py-1 hover:bg-sage/20 transition">zippystore.my.id ↗</a>
+        </div>
+        <p class="text-sage/90 text-sm mb-4">Zippy Store</p>
+        <ul class="space-y-2.5 text-muted leading-relaxed">
+          <li class="flex gap-3"><span class="text-sage mt-1.5 text-[8px]">●</span><span data-id="Membangun dan mengelola bisnis online sendiri sejak 2018 — bermula dari reseller game online, kini berkembang menjadi toko multi-produk: joki tugas, aplikasi premium, social media boost, dan layanan digital lainnya." data-en="Built and ran my own online business since 2018 — starting as an online-game reseller, now grown into a multi-product store: assignment help, premium apps, social media boost, and other digital services.">Membangun dan mengelola bisnis online sendiri sejak 2018 — bermula dari reseller game online, kini berkembang menjadi toko multi-produk: joki tugas, aplikasi premium, social media boost, dan layanan digital lainnya.</span></li>
+          <li class="flex gap-3"><span class="text-sage mt-1.5 text-[8px]">●</span><span data-id="Melayani lebih dari 1.000 pelanggan dengan reputasi terpercaya, membangun hubungan jangka panjang dan kepercayaan yang kuat." data-en="Served 1,000+ customers with a trusted reputation, building long-term relationships and strong customer trust.">Melayani lebih dari 1.000 pelanggan dengan reputasi terpercaya, membangun hubungan jangka panjang dan kepercayaan yang kuat.</span></li>
+          <li class="flex gap-3"><span class="text-sage mt-1.5 text-[8px]">●</span><span data-id="Mengelola seluruh aspek bisnis secara mandiri: pemasaran, layanan pelanggan, pengembangan website toko, hingga operasional harian." data-en="Single-handedly managing every aspect of the business: marketing, customer service, store website development, and daily operations.">Mengelola seluruh aspek bisnis secara mandiri: pemasaran, layanan pelanggan, pengembangan website toko, hingga operasional harian.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section class="max-w-6xl mx-auto px-6 py-20">
+  <div class="grid md:grid-cols-2 gap-12">
+    <div class="reveal">
+      <h2 class="font-display text-3xl font-600 mb-8" data-id="Keahlian Teknis" data-en="Technical Skills">Keahlian Teknis</h2>
+      <div class="flex flex-wrap gap-2.5 font-mono text-sm">
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">PHP</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">JavaScript</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">React.js</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">CodeIgniter</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Express.js</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Vite</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Tailwind</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Bootstrap</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Google Apps Script</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">MySQL</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Google Workspace</span>
+        <span class="bg-surface border border-line rounded-lg px-4 py-2">Microsoft Office</span>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.1s">
+      <h2 class="font-display text-3xl font-600 mb-8" data-id="Keahlian Profesional" data-en="Professional Skills">Keahlian Profesional</h2>
+      <div class="space-y-5 text-muted">
+        <div>
+          <p class="text-ink font-500 mb-1" data-id="Manajemen Proyek & Kepemimpinan" data-en="Project Management & Leadership">Manajemen Proyek & Kepemimpinan</p>
+          <p class="text-sm leading-relaxed" data-id="Terbiasa memimpin tim intern dan mengoordinasi pekerjaan lintas divisi dari perencanaan hingga evaluasi." data-en="Experienced in leading intern teams and coordinating cross-divisional work from planning to evaluation.">Terbiasa memimpin tim intern dan mengoordinasi pekerjaan lintas divisi dari perencanaan hingga evaluasi.</p>
+        </div>
+        <div>
+          <p class="text-ink font-500 mb-1" data-id="Komunikasi & Public Relations" data-en="Communication & Public Relations">Komunikasi & Public Relations</p>
+          <p class="text-sm leading-relaxed" data-id="Menangani komunikasi langsung dengan ratusan siswa, orang tua, dan kandidat secara profesional dan responsif." data-en="Handle direct communication with hundreds of students, parents, and candidates professionally and responsively.">Menangani komunikasi langsung dengan ratusan siswa, orang tua, dan kandidat secara profesional dan responsif.</p>
+        </div>
+        <div>
+          <p class="text-ink font-500 mb-1" data-id="Manajemen Waktu & Berpikir Kritis" data-en="Time Management & Critical Thinking">Manajemen Waktu & Berpikir Kritis</p>
+          <p class="text-sm leading-relaxed" data-id="Mengelola banyak peran sekaligus dengan tetap menjaga ketepatan waktu dan kualitas hasil kerja." data-en="Juggle multiple roles at once while maintaining punctuality and quality of work.">Mengelola banyak peran sekaligus dengan tetap menjaga ketepatan waktu dan kualitas hasil kerja.</p>
+        </div>
+        <div>
+          <p class="text-ink font-500 mb-1" data-id="Human Resources & Perpajakan" data-en="Human Resources & Taxation">Human Resources & Perpajakan</p>
+          <p class="text-sm leading-relaxed" data-id="Menguasai siklus rekrutmen, payroll, serta perhitungan PPh 21 dan PPh 23 untuk lingkup perusahaan kecil-menengah." data-en="Skilled in the recruitment cycle, payroll, and PPh 21 & PPh 23 calculation for small-to-medium companies.">Menguasai siklus rekrutmen, payroll, serta perhitungan PPh 21 dan PPh 23 untuk lingkup perusahaan kecil-menengah.</p>
+        </div>
+      </div>
+
+      <h2 class="font-display text-3xl font-600 mb-6 mt-12" data-id="Bahasa" data-en="Languages">Bahasa</h2>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span data-id="Bahasa Indonesia" data-en="Indonesian">Bahasa Indonesia</span>
+          <span class="font-mono text-xs bg-amber/15 border border-amber/30 text-amber rounded-full px-3 py-1" data-id="Bahasa Ibu" data-en="Native">Bahasa Ibu</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span data-id="Bahasa Inggris" data-en="English">Bahasa Inggris</span>
+          <span class="font-mono text-xs bg-surface2 border border-line text-muted rounded-full px-3 py-1">Intermediate</span>
+        </div>
+        <p class="text-sm text-faint leading-relaxed" data-id="Kuat dalam membaca dan menulis untuk kebutuhan kerja; kemampuan berbicara masih terus dikembangkan." data-en="Strong in reading and writing for work; spoken fluency is still developing.">Kuat dalam membaca dan menulis untuk kebutuhan kerja; kemampuan berbicara masih terus dikembangkan.</p>
+      </div>
+
+      <div class="mt-10 p-5 bg-surface border border-line rounded-xl">
+        <p class="font-mono text-xs text-amber mb-1">// currently learning</p>
+        <p class="text-muted text-sm" data-id="S1 Sistem Informasi — Universitas Terbuka" data-en="B.Sc. Information Systems — Universitas Terbuka">S1 Sistem Informasi — Universitas Terbuka</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="bg-surface border border-line rounded-3xl p-10 md:p-16 text-center relative overflow-hidden reveal">
+    <div class="glow absolute inset-0"></div>
+    <div class="relative">
+      <p class="font-mono text-xs text-amber tracking-[0.3em] uppercase mb-4">// let's talk</p>
+      <h2 class="font-display text-4xl md:text-5xl font-600 mb-5" data-id="Mari Bekerja Sama" data-en="Let's Work Together">Mari Bekerja Sama</h2>
+      <p class="text-muted text-lg max-w-xl mx-auto mb-10" data-id="Punya proyek atau peran yang butuh seseorang yang bisa ngoding sekaligus mengurus operasional? Saya siap." data-en="Got a project or role that needs someone who can code and run operations? I'm ready.">Punya proyek atau peran yang butuh seseorang yang bisa ngoding sekaligus mengurus operasional? Saya siap.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:ekadwis912@gmail.com" class="bg-amber text-bg font-500 px-6 py-3 rounded-full hover:bg-amber2 transition">ekadwis912@gmail.com</a>
+        <a href="https://wa.me/6282246703900" class="border border-line px-6 py-3 rounded-full text-muted hover:text-ink hover:border-muted transition">WhatsApp</a>
+        <a href="https://www.linkedin.com/in/ekadwisaputra/" target="_blank" class="border border-line px-6 py-3 rounded-full text-muted hover:text-ink hover:border-muted transition">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-line/60 py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-faint font-mono text-xs">
+    <span>© 2026 Eka Dwi Saputra</span>
+    <!-- <span data-id="Dibuat dengan HTML &amp; Tailwind" data-en="Built with HTML &amp; Tailwind">Dibuat dengan HTML & Tailwind</span> -->
+  </div>
+</footer>
+
+</main>
+
+<script>
+  // ===== Scroll reveal =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== PROJECTS: load dari projects.json =====
+  // Fallback dummy bila projects.json belum ada / dibuka via file://
+  const FALLBACK_PROJECTS = [
+    { title:"Dashboard Keuangan Internal", desc:"Sistem pencatatan kas & invoice otomatis untuk memantau pemasukan siswa secara real-time.", image:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", stack:["React","Apps Script","Spreadsheet API"], live:"#", code:"#" },
+    { title:"Sistem Penjadwalan Siswa", desc:"Booking jadwal siswa ke mentor dengan pencegahan bentrok dan notifikasi otomatis.", image:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80", stack:["JavaScript","Apps Script"], live:"#", code:"#" },
+    { title:"Web Pajak Daerah", desc:"Aplikasi web pengelolaan pajak untuk salah satu kota besar di Indonesia.", image:"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80", stack:["CodeIgniter","MySQL","Bootstrap"], live:"#", code:"#" },
+  ];
+
+  function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  function renderProjects(list){
+    const grid = document.getElementById('projectGrid');
+    if(!list || !list.length){
+      grid.innerHTML = '<p class="text-faint font-mono text-sm col-span-full">Belum ada proyek. Tambahkan lewat halaman kelola proyek.</p>';
+      return;
+    }
+    grid.innerHTML = list.map((p,i)=>{
+      const stack = (p.stack||[]).map(s=>`<span class="text-amber">${escapeHtml(s)}</span>`).join('<span class="text-faint">·</span>');
+      const live = p.live && p.live!=='#' ? `<a href="${escapeHtml(p.live)}" target="_blank" class="underline-grow text-ink">Live →</a>` : '';
+      const code = p.code && p.code!=='#' ? `<a href="${escapeHtml(p.code)}" target="_blank" class="underline-grow text-muted">Code →</a>` : '';
+      const links = (live||code) ? `<div class="flex gap-4 text-sm mt-5">${live}${code}</div>` : '';
+      const img = p.image ? `<img src="${escapeHtml(p.image)}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">` : '<div class="w-full h-full flex items-center justify-center text-faint font-mono text-xs">no image</div>';
+      const stackRow = stack ? `<div class="flex flex-wrap gap-2 font-mono text-xs items-center">${stack}</div>` : '';
+      const descRow = p.desc ? `<p class="text-muted leading-relaxed mb-4 text-[15px]">${escapeHtml(p.desc)}</p>` : '';
+      return `<article class="reveal card-hover bg-surface border border-line rounded-2xl overflow-hidden group" style="transition-delay:${(i%3)*0.08}s">
+        <div class="aspect-video overflow-hidden bg-surface2">${img}</div>
+        <div class="p-6">
+          <h3 class="font-display text-xl font-600 mb-2">${escapeHtml(p.title||'')}</h3>
+          ${descRow}${stackRow}${links}
+        </div>
+      </article>`;
+    }).join('');
+    grid.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }
+
+  fetch('projects.json', { cache:'no-store' })
+    .then(r=>{ if(!r.ok) throw new Error('no file'); return r.json(); })
+    .then(data=> renderProjects(Array.isArray(data)?data:(data.projects||[])))
+    .catch(()=> renderProjects(FALLBACK_PROJECTS));
+
+  // ===== Bilingual toggle =====
+  let lang = 'id';
+  const btn = document.getElementById('langToggle');
+  const label = document.getElementById('langLabel');
+  function applyLang() {
+    document.documentElement.lang = lang;
+    label.textContent = lang === 'id' ? 'EN' : 'ID';
+    document.querySelectorAll('[data-id]').forEach(el => {
+      const val = lang === 'id' ? el.getAttribute('data-id') : el.getAttribute('data-en');
+      if (val !== null) el.innerHTML = val;
+    });
+  }
+  btn.addEventListener('click', () => { lang = lang === 'id' ? 'en' : 'id'; applyLang(); });
+</script>
+</body>
+</html>

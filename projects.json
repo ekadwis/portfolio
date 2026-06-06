@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Dashboard Keuangan Internal",
+    "desc": "Sistem pencatatan kas & invoice otomatis untuk memantau pemasukan siswa secara real-time.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "stack": ["React", "Apps Script", "Spreadsheet API"],
+    "live": "",
+    "code": ""
+  },
+  {
+    "title": "Sistem Penjadwalan Siswa",
+    "desc": "Booking jadwal siswa ke mentor dengan pencegahan bentrok dan notifikasi otomatis.",
+    "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    "stack": ["JavaScript", "Apps Script"],
+    "live": "",
+    "code": ""
+  },
+  {
+    "title": "Web Pajak Daerah",
+    "desc": "Aplikasi web pengelolaan pajak untuk salah satu kota besar di Indonesia.",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    "stack": ["CodeIgniter", "MySQL", "Bootstrap"],
+    "live": "",
+    "code": ""
+  }
+]

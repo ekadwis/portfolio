@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelola Proyek — Putra</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: { display:['Fraunces','serif'], body:['Outfit','sans-serif'], mono:['JetBrains Mono','monospace'] },
+    colors: { bg:'#1c1917', surface:'#262220', surface2:'#2f2a27', line:'#3a342f', ink:'#f5f1ea', muted:'#a8a097', faint:'#6f675f', amber:'#e8a55c', amber2:'#f0bd80', sage:'#8fae8b', danger:'#d98c7a' },
+  } },
+}
+</script>
+<style>
+  body { background:#1c1917; }
+  ::selection { background:#e8a55c; color:#1c1917; }
+  input, textarea { outline:none; }
+  input:focus, textarea:focus { border-color:#e8a55c88; }
+  .toast { transition: opacity .3s, transform .3s; }
+</style>
+</head>
+<body class="font-body text-ink antialiased min-h-screen">
+
+<div class="max-w-5xl mx-auto px-6 py-12">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-2">
+    <a href="index.html" class="font-mono text-xs text-faint hover:text-amber transition">← kembali ke website</a>
+    <span class="font-mono text-xs text-faint">editor lokal · tanpa database</span>
+  </div>
+  <h1 class="font-display text-4xl font-600 mb-2">Kelola Proyek</h1>
+  <p class="text-muted mb-8 leading-relaxed max-w-2xl">
+    Tambah, edit, dan hapus proyek di sini. Perubahan tersimpan sementara di browser kamu.
+    Setelah selesai, klik <span class="text-amber font-500">Export projects.json</span>, lalu taruh file itu
+    di folder yang sama dengan <span class="font-mono text-sm">index.html</span> dan push ke GitHub.
+  </p>
+
+  <!-- Action bar -->
+  <div class="flex flex-wrap gap-3 mb-10">
+    <button id="btnExport" class="bg-amber text-bg font-500 px-5 py-2.5 rounded-full hover:bg-amber2 transition text-sm">↓ Export projects.json</button>
+    <label class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink hover:border-muted transition text-sm cursor-pointer">
+      ↑ Import projects.json
+      <input id="fileImport" type="file" accept="application/json,.json" class="hidden">
+    </label>
+    <button id="btnLoadCurrent" class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink hover:border-muted transition text-sm">⟳ Muat dari website</button>
+    <button id="btnReset" class="border border-line/60 px-5 py-2.5 rounded-full text-faint hover:text-danger hover:border-danger/50 transition text-sm ml-auto">Reset semua</button>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-8">
+
+    <!-- FORM -->
+    <div class="bg-surface border border-line rounded-2xl p-6 h-fit lg:sticky lg:top-6">
+      <h2 id="formTitle" class="font-display text-2xl font-600 mb-5">Tambah Proyek</h2>
+      <input type="hidden" id="editIndex" value="-1">
+
+      <label class="block text-sm text-muted mb-1.5">Nama Proyek <span class="text-amber">*</span></label>
+      <input id="fTitle" type="text" placeholder="mis. Dashboard Keuangan Internal" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint">
+
+      <label class="block text-sm text-muted mb-1.5">URL Gambar</label>
+      <input id="fImage" type="url" placeholder="https://... (link gambar online)" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-1 text-ink placeholder-faint font-mono text-sm">
+      <div id="imgPreview" class="mb-4"></div>
+
+      <label class="block text-sm text-muted mb-1.5">Deskripsi <span class="text-faint">(opsional)</span></label>
+      <textarea id="fDesc" rows="3" placeholder="Penjelasan singkat tentang proyek..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint resize-none"></textarea>
+
+      <label class="block text-sm text-muted mb-1.5">Tech Stack <span class="text-faint">(opsional, pisah dengan koma)</span></label>
+      <input id="fStack" type="text" placeholder="React, Apps Script, MySQL" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint">
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm text-muted mb-1.5">Link Live <span class="text-faint">(opsional)</span></label>
+          <input id="fLive" type="url" placeholder="https://..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint font-mono text-sm">
+        </div>
+        <div>
+          <label class="block text-sm text-muted mb-1.5">Link Code <span class="text-faint">(opsional)</span></label>
+          <input id="fCode" type="url" placeholder="https://github.com/..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint font-mono text-sm">
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-2">
+        <button id="btnSave" class="bg-amber text-bg font-500 px-5 py-2.5 rounded-full hover:bg-amber2 transition text-sm flex-1">Simpan Proyek</button>
+        <button id="btnCancel" class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink transition text-sm hidden">Batal</button>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display text-2xl font-600">Daftar Proyek</h2>
+        <span id="count" class="font-mono text-xs text-faint">0 proyek</span>
+      </div>
+      <div id="list" class="space-y-3"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 bg-surface2 border border-line text-ink px-5 py-3 rounded-full text-sm opacity-0 pointer-events-none shadow-2xl"></div>
+
+<script>
+  const KEY = 'putra_projects';
+  let projects = [];
+
+  const $ = id => document.getElementById(id);
+  function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  function toast(msg){
+    const t = $('toast'); t.textContent = msg;
+    t.style.opacity = '1'; t.style.transform = 'translate(-50%, -6px)';
+    clearTimeout(t._h); t._h = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translate(-50%,0)'; }, 2200);
+  }
+
+  function save(){ localStorage.setItem(KEY, JSON.stringify(projects)); }
+  function load(){
+    try { const d = JSON.parse(localStorage.getItem(KEY)); if(Array.isArray(d)) projects = d; } catch(e){}
+  }
+
+  function render(){
+    $('count').textContent = projects.length + ' proyek';
+    const list = $('list');
+    if(!projects.length){ list.innerHTML = '<p class="text-faint font-mono text-sm bg-surface border border-line rounded-xl p-6 text-center">Belum ada proyek. Tambahkan lewat form di samping.</p>'; return; }
+    list.innerHTML = projects.map((p,i)=>`
+      <div class="bg-surface border border-line rounded-xl p-4 flex gap-4 items-start">
+        <div class="w-20 h-14 rounded-lg overflow-hidden bg-surface2 shrink-0">
+          ${p.image ? `<img src="${escapeHtml(p.image)}" class="w-full h-full object-cover" onerror="this.style.display='none'">` : ''}
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-display text-lg font-600 truncate">${escapeHtml(p.title||'(tanpa nama)')}</h3>
+          <p class="text-muted text-sm line-clamp-1">${escapeHtml(p.desc||'')}</p>
+          <div class="flex flex-wrap gap-1.5 mt-1.5 font-mono text-[11px]">
+            ${(p.stack||[]).map(s=>`<span class="text-amber/80">${escapeHtml(s)}</span>`).join('<span class="text-faint">·</span>')}
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5 shrink-0">
+          <button onclick="editItem(${i})" class="font-mono text-xs border border-line rounded-lg px-3 py-1.5 text-muted hover:text-amber hover:border-amber transition">edit</button>
+          <button onclick="moveUp(${i})" class="font-mono text-xs border border-line rounded-lg px-3 py-1.5 text-faint hover:text-ink transition ${i===0?'opacity-30 pointer-events-none':''}">↑</button>
+          <button onclick="delItem(${i})" class="font-mono text-xs border border-line/60 rounded-lg px-3 py-1.5 text-faint hover:text-danger hover:border-danger/50 transition">hapus</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function resetForm(){
+    $('editIndex').value = '-1';
+    $('formTitle').textContent = 'Tambah Proyek';
+    $('btnSave').textContent = 'Simpan Proyek';
+    $('btnCancel').classList.add('hidden');
+    ['fTitle','fImage','fDesc','fStack','fLive','fCode'].forEach(id=>$(id).value='');
+    $('imgPreview').innerHTML='';
+  }
+
+  function readForm(){
+    return {
+      title: $('fTitle').value.trim(),
+      image: $('fImage').value.trim(),
+      desc:  $('fDesc').value.trim(),
+      stack: $('fStack').value.split(',').map(s=>s.trim()).filter(Boolean),
+      live:  $('fLive').value.trim(),
+      code:  $('fCode').value.trim(),
+    };
+  }
+
+  $('btnSave').addEventListener('click', ()=>{
+    const data = readForm();
+    if(!data.title){ toast('Nama proyek wajib diisi'); $('fTitle').focus(); return; }
+    const idx = parseInt($('editIndex').value, 10);
+    if(idx >= 0){ projects[idx] = data; toast('Proyek diperbarui'); }
+    else { projects.push(data); toast('Proyek ditambahkan'); }
+    save(); render(); resetForm();
+  });
+
+  $('btnCancel').addEventListener('click', resetForm);
+
+  window.editItem = function(i){
+    const p = projects[i];
+    $('editIndex').value = i;
+    $('formTitle').textContent = 'Edit Proyek';
+    $('btnSave').textContent = 'Simpan Perubahan';
+    $('btnCancel').classList.remove('hidden');
+    $('fTitle').value = p.title||''; $('fImage').value = p.image||'';
+    $('fDesc').value = p.desc||''; $('fStack').value = (p.stack||[]).join(', ');
+    $('fLive').value = p.live||''; $('fCode').value = p.code||'';
+    updatePreview();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  };
+
+  window.delItem = function(i){
+    if(confirm('Hapus proyek "'+(projects[i].title||'')+'"?')){ projects.splice(i,1); save(); render(); toast('Proyek dihapus'); }
+  };
+
+  window.moveUp = function(i){
+    if(i<=0) return;
+    [projects[i-1], projects[i]] = [projects[i], projects[i-1]];
+    save(); render(); toast('Urutan diubah');
+  };
+
+  function updatePreview(){
+    const url = $('fImage').value.trim();
+    $('imgPreview').innerHTML = url ? `<img src="${escapeHtml(url)}" class="mt-2 rounded-lg max-h-32 border border-line" onerror="this.style.display='none'">` : '';
+  }
+  $('fImage').addEventListener('input', updatePreview);
+
+  // Export
+  $('btnExport').addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(projects, null, 2)], { type:'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'projects.json'; a.click();
+    URL.revokeObjectURL(a.href);
+    toast('projects.json di-download');
+  });
+
+  // Import
+  $('fileImport').addEventListener('change', e=>{
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try {
+        const data = JSON.parse(reader.result);
+        const arr = Array.isArray(data) ? data : (data.projects||[]);
+        if(!Array.isArray(arr)) throw new Error();
+        projects = arr; save(); render(); resetForm(); toast('Berhasil diimpor: '+arr.length+' proyek');
+      } catch(err){ toast('File tidak valid'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // Muat dari website (projects.json yang sedang live)
+  $('btnLoadCurrent').addEventListener('click', ()=>{
+    fetch('projects.json', { cache:'no-store' })
+      .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
+      .then(data=>{ const arr = Array.isArray(data)?data:(data.projects||[]); projects = arr; save(); render(); resetForm(); toast('Dimuat dari website: '+arr.length+' proyek'); })
+      .catch(()=> toast('Tidak bisa memuat (jalankan via hosting/live server)'));
+  });
+
+  // Reset
+  $('btnReset').addEventListener('click', ()=>{
+    if(confirm('Hapus SEMUA proyek dari editor ini? Tindakan ini tidak bisa dibatalkan.')){ projects = []; save(); render(); resetForm(); toast('Semua proyek dihapus'); }
+  });
+
+  // Init: localStorage dulu, kalau kosong coba projects.json
+  load();
+  if(!projects.length){
+    fetch('projects.json', { cache:'no-store' })
+      .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
+      .then(data=>{ const arr = Array.isArray(data)?data:(data.projects||[]); if(arr.length){ projects = arr; save(); render(); } })
+      .catch(()=>{});
+  }
+  render();
+</script>
+</body>
+</html>
