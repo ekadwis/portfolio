@@ -2,7 +2,7 @@
   {
     "title": "MESRA — Pemeriksaan Kesehatan Pranikah",
     "desc": "Aplikasi web layanan pemeriksaan kesehatan pranikah dengan dua peran pengguna (Pasien & Bidan). Pasien dapat mengakses riwayat pemeriksaan, hasil tes, dan rekomendasi kesehatan; bidan mengelola data pasien, menginput hasil tes, dan membuat laporan. Didukung oleh Politeknik Kesehatan Kemenkes RI.",
-    "image": "",
+    "image": "https://i.postimg.cc/9frRjBQw/image.png",
     "stack": ["HTML", "CSS", "JavaScript", "Google Apps Script", "Spreadsheet DB"],
     "live": "https://mesra.site/",
     "code": ""
@@ -10,7 +10,7 @@
   {
     "title": "Zippy Store — Web Toko Digital",
     "desc": "Website toko untuk bisnis digital saya: joki tugas, aplikasi premium, social media boost, dan sewa nomor OTP. Dilengkapi katalog layanan, halaman testimoni, galeri, alur cara pesan, dan sistem login. Melayani 5.000+ pesanan dan 1.200+ pelanggan.",
-    "image": "",
+    "image": "https://i.postimg.cc/XJ5rr7Fn/image.png",
     "stack": ["CodeIgniter 4", "Bootstrap", "MySQL"],
     "live": "https://zippystore.my.id/",
     "code": ""
@@ -18,7 +18,7 @@
   {
     "title": "Undangan Pernikahan Digital",
     "desc": "Undangan pernikahan digital interaktif dengan hitung mundur acara, galeri, amplop digital, dan buku tamu RSVP yang menyimpan konfirmasi kehadiran serta ucapan tamu secara real-time ke database.",
-    "image": "",
+    "image": "https://i.postimg.cc/VvB5FGDC/image.png",
     "stack": ["Tailwind", "JavaScript", "Supabase"],
     "live": "https://ekadwis.github.io/wedding-invitation/",
     "code": ""
@@ -26,7 +26,7 @@
   {
     "title": "Kopi Senja — Landing Page Kafe",
     "desc": "Landing page untuk specialty coffee house dengan nuansa hangat dan tenang. Berisi profil kafe, menu pilihan, galeri suasana, ulasan pelanggan, dan informasi kunjungan.",
-    "image": "",
+    "image": "https://i.postimg.cc/TYfKPx3B/image.png",
     "stack": ["HTML", "CSS", "JavaScript"],
     "live": "https://ekadwis.github.io/kopisenja/",
     "code": ""
@@ -34,7 +34,7 @@
   {
     "title": "LUMA — Landing Page Skincare",
     "desc": "Landing page produk perawatan kulit alami dengan tampilan bersih dan elegan. Menonjolkan filosofi brand, katalog best seller, paket starter, dan ulasan pelanggan.",
-    "image": "",
+    "image": "https://i.postimg.cc/Wb8hFyDq/image.png",
     "stack": ["HTML", "CSS", "JavaScript"],
     "live": "https://ekadwis.github.io/luma/",
     "code": ""
@@ -42,7 +42,7 @@
   {
     "title": "RUANG — Website Studio Arsitektur",
     "desc": "Website profil untuk studio arsitektur dengan estetika minimal dan editorial. Menampilkan profil studio, karya terpilih, layanan (arsitektur, interior, lanskap), dan kontak.",
-    "image": "",
+    "image": "https://i.postimg.cc/W14tM7rK/image.png",
     "stack": ["HTML", "CSS", "JavaScript"],
     "live": "https://ekadwis.github.io/ruang/",
     "code": ""
