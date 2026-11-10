@@ -1,257 +1,458 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelola Proyek — Putra</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Kelola Proyek — Eka Dwi Saputra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
-  theme: { extend: {
-    fontFamily: { display:['Fraunces','serif'], body:['Outfit','sans-serif'], mono:['JetBrains Mono','monospace'] },
-    colors: { bg:'#1c1917', surface:'#262220', surface2:'#2f2a27', line:'#3a342f', ink:'#f5f1ea', muted:'#a8a097', faint:'#6f675f', amber:'#e8a55c', amber2:'#f0bd80', sage:'#8fae8b', danger:'#d98c7a' },
-  } },
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Outfit', 'sans-serif'],
+        body: ['Plus Jakarta Sans', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      colors: {
+        zp: {
+          bg: '#fafafa',
+          white: '#ffffff',
+          subtle: '#f4f4f5',
+          ink: '#18181b',
+          ink2: '#3f3f46',
+          muted: '#71717a',
+          border: '#18181b',
+          yellow: '#fde047',
+          amber: '#fbbf24',
+          amberLight: '#fef3c7',
+          mint: '#6ee7b7',
+          mintLight: '#d1fae5',
+          lavender: '#c084fc',
+          lavenderLight: '#f3e8ff',
+          green: '#22c55e',
+          red: '#ef4444',
+          // Dark
+          darkBg: '#0f0f11',
+          darkCard: '#18181b',
+          darkSubtle: '#27272a',
+          darkInk: '#f4f4f5',
+          darkInk2: '#d4d4d8',
+          darkMuted: '#a1a1aa',
+          darkBorder: '#3f3f46',
+        }
+      }
+    }
+  }
 }
 </script>
 <style>
-  body { background:#1c1917; }
-  ::selection { background:#e8a55c; color:#1c1917; }
-  input, textarea { outline:none; }
-  input:focus, textarea:focus { border-color:#e8a55c88; }
-  .toast { transition: opacity .3s, transform .3s; }
+  :root {
+    --zp-border: #18181b;
+    --shadow-color: #18181b;
+  }
+  .dark {
+    --zp-border: #3f3f46;
+    --shadow-color: #000000;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .dot-bg {
+    background-image: radial-gradient(var(--zp-border) 10%, transparent 10%);
+    background-size: 20px 20px;
+    opacity: 0.05;
+  }
+  .dark .dot-bg {
+    opacity: 0.12;
+  }
+
+  .neo-box {
+    border: 2px solid var(--zp-border);
+    box-shadow: 4px 4px 0px 0px var(--shadow-color);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease;
+  }
+  .neo-box:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--shadow-color);
+  }
+
+  .neo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--zp-border);
+    box-shadow: 3px 3px 0px 0px var(--shadow-color);
+    font-weight: 800;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
+    cursor: pointer;
+  }
+  .neo-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px 0px var(--shadow-color);
+  }
+  .neo-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px 0px var(--shadow-color);
+  }
+
+  input, textarea { outline: none; }
+  input:focus, textarea:focus {
+    border-color: #fde047;
+    box-shadow: 2px 2px 0px 0px var(--shadow-color);
+  }
 </style>
 </head>
-<body class="font-body text-ink antialiased min-h-screen">
+<body class="bg-[#fafafa] dark:bg-[#0f0f11] text-zp-ink dark:text-zp-darkInk font-body min-h-screen relative antialiased">
 
-<div class="max-w-5xl mx-auto px-6 py-12">
+<div class="dot-bg fixed inset-0 pointer-events-none z-0"></div>
 
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-2">
-    <a href="index.html" class="font-mono text-xs text-faint hover:text-amber transition">← kembali ke website</a>
-    <span class="font-mono text-xs text-faint">editor lokal · tanpa database</span>
+<div class="relative z-10 max-w-5xl mx-auto px-5 py-10">
+
+  <!-- Top bar -->
+  <div class="flex items-center justify-between mb-4">
+    <a href="index.html" class="neo-btn bg-white dark:bg-zp-darkCard px-3 py-1.5 rounded-lg text-xs font-display">
+      ← Kembali ke Portfolio
+    </a>
+    <div class="flex items-center gap-2">
+      <button id="themeToggle" class="neo-btn bg-white dark:bg-zp-darkCard px-3 py-1.5 rounded-lg text-xs font-mono font-700">
+        <span id="themeIcon">🌙 Dark</span>
+      </button>
+      <span class="bg-zp-yellow text-zp-ink text-[11px] font-mono font-800 px-2 py-1 rounded border border-zp-border shadow-[1px_1px_0px_#18181b]">
+        LOCAL JSON EDITOR
+      </span>
+    </div>
   </div>
-  <h1 class="font-display text-4xl font-600 mb-2">Kelola Proyek</h1>
-  <p class="text-muted mb-8 leading-relaxed max-w-2xl">
-    Tambah, edit, dan hapus proyek di sini. Perubahan tersimpan sementara di browser kamu.
-    Setelah selesai, klik <span class="text-amber font-500">Export projects.json</span>, lalu taruh file itu
-    di folder yang sama dengan <span class="font-mono text-sm">index.html</span> dan push ke GitHub.
-  </p>
 
-  <!-- Action bar -->
-  <div class="flex flex-wrap gap-3 mb-10">
-    <button id="btnExport" class="bg-amber text-bg font-500 px-5 py-2.5 rounded-full hover:bg-amber2 transition text-sm">↓ Export projects.json</button>
-    <label class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink hover:border-muted transition text-sm cursor-pointer">
+  <div class="mb-8">
+    <h1 class="font-display text-3xl sm:text-4xl font-900 leading-tight">
+      Kelola <span class="bg-zp-yellow text-zp-ink px-2 py-0.5 rounded border-2 border-zp-border shadow-[2px_2px_0px_var(--shadow-color)]">Katalog Proyek</span>
+    </h1>
+    <p class="text-zp-ink2 dark:text-zp-darkInk2 text-sm sm:text-base mt-3 leading-relaxed max-w-2xl font-500">
+      Tambah, edit, atau hapus proyek di sini. Setelah selesai melakukan perubahan, klik <strong class="text-zp-ink dark:text-white">"↓ Export projects.json"</strong>, lalu simpan file tersebut menimpa <code class="font-mono text-xs bg-zp-subtle dark:bg-zp-darkSubtle px-1.5 py-0.5 rounded border border-zp-border dark:border-zp-darkBorder">projects.json</code> di folder portfolio kamu.
+    </p>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="flex flex-wrap gap-2.5 mb-8">
+    <button id="btnExport" class="neo-btn bg-zp-yellow text-zp-ink px-4 py-2 rounded-xl text-xs sm:text-sm font-display">
+      ↓ Export projects.json
+    </button>
+    <label class="neo-btn bg-white dark:bg-zp-darkCard text-zp-ink dark:text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-display cursor-pointer">
       ↑ Import projects.json
       <input id="fileImport" type="file" accept="application/json,.json" class="hidden">
     </label>
-    <button id="btnLoadCurrent" class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink hover:border-muted transition text-sm">⟳ Muat dari website</button>
-    <button id="btnReset" class="border border-line/60 px-5 py-2.5 rounded-full text-faint hover:text-danger hover:border-danger/50 transition text-sm ml-auto">Reset semua</button>
+    <button id="btnLoadCurrent" class="neo-btn bg-white dark:bg-zp-darkCard text-zp-ink dark:text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-display">
+      ⟳ Muat Ulang dari File
+    </button>
+    <button id="btnReset" class="neo-btn bg-zp-red text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-display ml-auto">
+      Reset ke Default
+    </button>
   </div>
 
-  <div class="grid lg:grid-cols-2 gap-8">
+  <div class="grid lg:grid-cols-2 gap-8 items-start">
 
     <!-- FORM -->
-    <div class="bg-surface border border-line rounded-2xl p-6 h-fit lg:sticky lg:top-6">
-      <h2 id="formTitle" class="font-display text-2xl font-600 mb-5">Tambah Proyek</h2>
+    <div class="neo-box bg-white dark:bg-zp-darkCard rounded-2xl p-6 lg:sticky lg:top-6">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b-2 border-dashed border-zp-border dark:border-zp-darkBorder">
+        <h2 id="formTitle" class="font-display text-xl font-900">Tambah Proyek Baru</h2>
+        <span class="text-xs font-mono font-700 text-zp-muted">INPUT FORM</span>
+      </div>
       <input type="hidden" id="editIndex" value="-1">
 
-      <label class="block text-sm text-muted mb-1.5">Nama Proyek <span class="text-amber">*</span></label>
-      <input id="fTitle" type="text" placeholder="mis. Dashboard Keuangan Internal" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint">
+      <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">Nama Proyek <span class="text-zp-red">*</span></label>
+      <input id="fTitle" type="text" placeholder="mis. MESRA — Pemeriksaan Kesehatan" class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3.5 py-2 mb-3.5 text-sm font-500 text-zp-ink dark:text-white">
 
-      <label class="block text-sm text-muted mb-1.5">URL Gambar</label>
-      <input id="fImage" type="url" placeholder="https://... (link gambar online)" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-1 text-ink placeholder-faint font-mono text-sm">
-      <div id="imgPreview" class="mb-4"></div>
+      <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">URL Gambar / Thumbnail</label>
+      <input id="fImage" type="url" placeholder="https://... (link gambar online)" class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3.5 py-2 mb-1.5 text-xs font-mono text-zp-ink dark:text-white">
+      <div id="imgPreview" class="mb-3.5"></div>
 
-      <label class="block text-sm text-muted mb-1.5">Deskripsi <span class="text-faint">(opsional)</span></label>
-      <textarea id="fDesc" rows="3" placeholder="Penjelasan singkat tentang proyek..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint resize-none"></textarea>
+      <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">Deskripsi Singkat</label>
+      <textarea id="fDesc" rows="3" placeholder="Penjelasan singkat peran, fitur utama, dan tujuan sistem..." class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3.5 py-2 mb-3.5 text-sm font-500 text-zp-ink dark:text-white resize-none"></textarea>
 
-      <label class="block text-sm text-muted mb-1.5">Tech Stack <span class="text-faint">(opsional, pisah dengan koma)</span></label>
-      <input id="fStack" type="text" placeholder="React, Apps Script, MySQL" class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint">
+      <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">Tech Stack <span class="text-zp-muted font-normal lowercase">(pisahkan dengan koma)</span></label>
+      <input id="fStack" type="text" placeholder="React, Google Apps Script, MySQL" class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3.5 py-2 mb-3.5 text-xs font-mono text-zp-ink dark:text-white">
 
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-3 mb-4">
         <div>
-          <label class="block text-sm text-muted mb-1.5">Link Live <span class="text-faint">(opsional)</span></label>
-          <input id="fLive" type="url" placeholder="https://..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint font-mono text-sm">
+          <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">Link Live Demo</label>
+          <input id="fLive" type="url" placeholder="https://..." class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3 py-2 text-xs font-mono text-zp-ink dark:text-white">
         </div>
         <div>
-          <label class="block text-sm text-muted mb-1.5">Link Code <span class="text-faint">(opsional)</span></label>
-          <input id="fCode" type="url" placeholder="https://github.com/..." class="w-full bg-bg border border-line rounded-lg px-4 py-2.5 mb-4 text-ink placeholder-faint font-mono text-sm">
+          <label class="block text-xs font-bold font-mono text-zp-ink dark:text-zp-darkInk uppercase mb-1">Link Source Code</label>
+          <input id="fCode" type="url" placeholder="https://github.com/..." class="w-full bg-zp-subtle dark:bg-zp-darkSubtle border-2 border-zp-border dark:border-zp-darkBorder rounded-xl px-3 py-2 text-xs font-mono text-zp-ink dark:text-white">
         </div>
       </div>
 
-      <div class="flex gap-3 mt-2">
-        <button id="btnSave" class="bg-amber text-bg font-500 px-5 py-2.5 rounded-full hover:bg-amber2 transition text-sm flex-1">Simpan Proyek</button>
-        <button id="btnCancel" class="border border-line px-5 py-2.5 rounded-full text-muted hover:text-ink transition text-sm hidden">Batal</button>
+      <div class="flex gap-2.5 pt-2">
+        <button id="btnSave" class="neo-btn bg-zp-yellow text-zp-ink px-5 py-2.5 rounded-xl text-sm font-display flex-1">
+          💾 Simpan Proyek
+        </button>
+        <button id="btnCancel" class="neo-btn bg-white dark:bg-zp-darkSubtle text-zp-ink dark:text-white px-4 py-2.5 rounded-xl text-sm font-display hidden">
+          Batal
+        </button>
       </div>
     </div>
 
     <!-- LIST -->
     <div>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="font-display text-2xl font-600">Daftar Proyek</h2>
-        <span id="count" class="font-mono text-xs text-faint">0 proyek</span>
+        <h2 class="font-display text-xl font-900">Daftar Proyek Aktif</h2>
+        <span id="count" class="bg-zp-mint text-zp-ink font-mono font-800 text-xs px-2.5 py-0.5 rounded border border-zp-border shadow-[1px_1px_0px_#18181b]">0 proyek</span>
       </div>
-      <div id="list" class="space-y-3"></div>
+      <div id="list" class="space-y-3.5"></div>
     </div>
 
   </div>
 </div>
 
-<!-- Toast -->
-<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 bg-surface2 border border-line text-ink px-5 py-3 rounded-full text-sm opacity-0 pointer-events-none shadow-2xl"></div>
-
 <script>
-  const KEY = 'putra_projects';
   let projects = [];
 
-  const $ = id => document.getElementById(id);
-  function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+  const STORAGE_KEY = 'portfolio_projects_data';
 
-  function toast(msg){
-    const t = $('toast'); t.textContent = msg;
-    t.style.opacity = '1'; t.style.transform = 'translate(-50%, -6px)';
-    clearTimeout(t._h); t._h = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translate(-50%,0)'; }, 2200);
+  // Fallback defaults
+  const DEFAULTS = [
+    {
+      title: "MESRA — Pemeriksaan Kesehatan Pranikah",
+      desc: "Aplikasi web layanan pemeriksaan kesehatan pranikah dengan dua peran pengguna (Pasien & Bidan). Pasien dapat mengakses riwayat pemeriksaan, hasil tes, dan rekomendasi kesehatan; bidan mengelola data pasien, menginput hasil tes, dan membuat laporan. Didukung oleh Politeknik Kesehatan Kemenkes RI.",
+      image: "https://i.postimg.cc/9frRjBQw/image.png",
+      stack: ["HTML", "CSS", "JavaScript", "Google Apps Script", "Spreadsheet DB"],
+      live: "https://mesra.site/",
+      code: ""
+    },
+    {
+      title: "Zippy Store — Web Toko Digital",
+      desc: "Website toko untuk bisnis digital saya: joki tugas, aplikasi premium, social media boost, dan sewa nomor OTP. Dilengkapi katalog layanan, halaman testimoni, galeri, alur cara pesan, dan sistem login. Melayani 5.000+ pesanan dan 1.200+ pelanggan.",
+      image: "https://i.postimg.cc/RVvh7KKp/zippystore-my-id-2026-11-10-1750.png",
+      stack: ["CodeIgniter 4", "Bootstrap", "MySQL"],
+      live: "https://zippystore.my.id/",
+      code: ""
+    }
+  ];
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
-  function save(){ localStorage.setItem(KEY, JSON.stringify(projects)); }
-  function load(){
-    try { const d = JSON.parse(localStorage.getItem(KEY)); if(Array.isArray(d)) projects = d; } catch(e){}
+  function init() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try { projects = JSON.parse(saved); renderList(); return; } catch(e){}
+    }
+    loadFromFetch();
   }
 
-  function render(){
-    $('count').textContent = projects.length + ' proyek';
-    const list = $('list');
-    if(!projects.length){ list.innerHTML = '<p class="text-faint font-mono text-sm bg-surface border border-line rounded-xl p-6 text-center">Belum ada proyek. Tambahkan lewat form di samping.</p>'; return; }
-    list.innerHTML = projects.map((p,i)=>`
-      <div class="bg-surface border border-line rounded-xl p-4 flex gap-4 items-start">
-        <div class="w-20 h-14 rounded-lg overflow-hidden bg-surface2 shrink-0">
-          ${p.image ? `<img src="${escapeHtml(p.image)}" class="w-full h-full object-cover" onerror="this.style.display='none'">` : ''}
-        </div>
+  function loadFromFetch() {
+    fetch('projects.json', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(data => {
+        projects = Array.isArray(data) ? data : (data.projects || []);
+        saveLocal();
+        renderList();
+      })
+      .catch(() => {
+        projects = DEFAULTS;
+        saveLocal();
+        renderList();
+      });
+  }
+
+  function saveLocal() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  }
+
+  function renderList() {
+    const listEl = document.getElementById('list');
+    const countEl = document.getElementById('count');
+    countEl.textContent = `${projects.length} proyek`;
+
+    if (!projects.length) {
+      listEl.innerHTML = '<div class="neo-box bg-white dark:bg-zp-darkCard p-6 rounded-xl text-center text-zp-muted font-mono text-xs">Belum ada proyek. Silakan tambahkan lewat form di sebelah kiri.</div>';
+      return;
+    }
+
+    listEl.innerHTML = projects.map((p, i) => {
+      const stackBadges = (p.stack || []).map(s => `<span class="bg-zp-subtle dark:bg-zp-darkSubtle border border-zp-border dark:border-zp-darkBorder px-1.5 py-0.5 rounded text-[10px] font-mono">${escapeHtml(s)}</span>`).join(' ');
+      const thumb = p.image ? `<img src="${escapeHtml(p.image)}" class="w-14 h-14 object-cover rounded-lg border border-zp-border shrink-0">` : `<div class="w-14 h-14 bg-zp-subtle dark:bg-zp-darkSubtle border border-zp-border rounded-lg flex items-center justify-center text-[10px] font-mono text-zp-muted shrink-0">no img</div>`;
+
+      return `
+      <div class="neo-box bg-white dark:bg-zp-darkCard rounded-xl p-4 flex items-center gap-3.5">
+        ${thumb}
         <div class="flex-1 min-w-0">
-          <h3 class="font-display text-lg font-600 truncate">${escapeHtml(p.title||'(tanpa nama)')}</h3>
-          <p class="text-muted text-sm line-clamp-1">${escapeHtml(p.desc||'')}</p>
-          <div class="flex flex-wrap gap-1.5 mt-1.5 font-mono text-[11px]">
-            ${(p.stack||[]).map(s=>`<span class="text-amber/80">${escapeHtml(s)}</span>`).join('<span class="text-faint">·</span>')}
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs font-bold text-zp-muted">#${String(i+1).padStart(2,'0')}</span>
+            <h4 class="font-display font-800 text-sm truncate">${escapeHtml(p.title || 'Tanpa Judul')}</h4>
           </div>
+          <p class="text-xs text-zp-ink2 dark:text-zp-darkInk2 truncate mt-0.5">${escapeHtml(p.desc || '-')}</p>
+          <div class="flex flex-wrap gap-1 mt-1.5">${stackBadges}</div>
         </div>
-        <div class="flex flex-col gap-1.5 shrink-0">
-          <button onclick="editItem(${i})" class="font-mono text-xs border border-line rounded-lg px-3 py-1.5 text-muted hover:text-amber hover:border-amber transition">edit</button>
-          <button onclick="moveUp(${i})" class="font-mono text-xs border border-line rounded-lg px-3 py-1.5 text-faint hover:text-ink transition ${i===0?'opacity-30 pointer-events-none':''}">↑</button>
-          <button onclick="delItem(${i})" class="font-mono text-xs border border-line/60 rounded-lg px-3 py-1.5 text-faint hover:text-danger hover:border-danger/50 transition">hapus</button>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="editProject(${i})" class="neo-btn bg-zp-yellow text-zp-ink px-2.5 py-1 rounded-lg text-xs font-mono">Edit</button>
+          <button onclick="deleteProject(${i})" class="neo-btn bg-zp-red text-white px-2.5 py-1 rounded-lg text-xs font-mono">Hapus</button>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
-  function resetForm(){
-    $('editIndex').value = '-1';
-    $('formTitle').textContent = 'Tambah Proyek';
-    $('btnSave').textContent = 'Simpan Proyek';
-    $('btnCancel').classList.add('hidden');
-    ['fTitle','fImage','fDesc','fStack','fLive','fCode'].forEach(id=>$(id).value='');
-    $('imgPreview').innerHTML='';
+  window.editProject = function(i) {
+    const p = projects[i];
+    document.getElementById('editIndex').value = i;
+    document.getElementById('formTitle').textContent = `Edit Proyek #${i+1}`;
+    document.getElementById('fTitle').value = p.title || '';
+    document.getElementById('fImage').value = p.image || '';
+    document.getElementById('fDesc').value = p.desc || '';
+    document.getElementById('fStack').value = (p.stack || []).join(', ');
+    document.getElementById('fLive').value = p.live || '';
+    document.getElementById('fCode').value = p.code || '';
+    document.getElementById('btnCancel').classList.remove('hidden');
+    updateImgPreview();
+  };
+
+  window.deleteProject = function(i) {
+    if (confirm(`Yakin ingin menghapus proyek "${projects[i].title}"?`)) {
+      projects.splice(i, 1);
+      saveLocal();
+      renderList();
+      resetForm();
+    }
+  };
+
+  function resetForm() {
+    document.getElementById('editIndex').value = '-1';
+    document.getElementById('formTitle').textContent = 'Tambah Proyek Baru';
+    document.getElementById('fTitle').value = '';
+    document.getElementById('fImage').value = '';
+    document.getElementById('fDesc').value = '';
+    document.getElementById('fStack').value = '';
+    document.getElementById('fLive').value = '';
+    document.getElementById('fCode').value = '';
+    document.getElementById('btnCancel').classList.add('hidden');
+    updateImgPreview();
   }
 
-  function readForm(){
-    return {
-      title: $('fTitle').value.trim(),
-      image: $('fImage').value.trim(),
-      desc:  $('fDesc').value.trim(),
-      stack: $('fStack').value.split(',').map(s=>s.trim()).filter(Boolean),
-      live:  $('fLive').value.trim(),
-      code:  $('fCode').value.trim(),
+  function updateImgPreview() {
+    const url = document.getElementById('fImage').value.trim();
+    const box = document.getElementById('imgPreview');
+    if (url) {
+      box.innerHTML = `<img src="${escapeHtml(url)}" class="h-20 w-auto rounded border border-zp-border object-cover mt-1" onerror="this.remove()">`;
+    } else {
+      box.innerHTML = '';
+    }
+  }
+
+  document.getElementById('fImage').addEventListener('input', updateImgPreview);
+
+  document.getElementById('btnSave').addEventListener('click', () => {
+    const title = document.getElementById('fTitle').value.trim();
+    if (!title) { alert('Nama proyek wajib diisi!'); return; }
+
+    const stackRaw = document.getElementById('fStack').value.trim();
+    const stack = stackRaw ? stackRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+    const item = {
+      title: title,
+      desc: document.getElementById('fDesc').value.trim(),
+      image: document.getElementById('fImage').value.trim(),
+      stack: stack,
+      live: document.getElementById('fLive').value.trim(),
+      code: document.getElementById('fCode').value.trim()
     };
-  }
 
-  $('btnSave').addEventListener('click', ()=>{
-    const data = readForm();
-    if(!data.title){ toast('Nama proyek wajib diisi'); $('fTitle').focus(); return; }
-    const idx = parseInt($('editIndex').value, 10);
-    if(idx >= 0){ projects[idx] = data; toast('Proyek diperbarui'); }
-    else { projects.push(data); toast('Proyek ditambahkan'); }
-    save(); render(); resetForm();
+    const idx = parseInt(document.getElementById('editIndex').value, 10);
+    if (idx >= 0) {
+      projects[idx] = item;
+    } else {
+      projects.push(item);
+    }
+
+    saveLocal();
+    renderList();
+    resetForm();
+    alert('Proyek berhasil disimpan ke memori browser!');
   });
 
-  $('btnCancel').addEventListener('click', resetForm);
-
-  window.editItem = function(i){
-    const p = projects[i];
-    $('editIndex').value = i;
-    $('formTitle').textContent = 'Edit Proyek';
-    $('btnSave').textContent = 'Simpan Perubahan';
-    $('btnCancel').classList.remove('hidden');
-    $('fTitle').value = p.title||''; $('fImage').value = p.image||'';
-    $('fDesc').value = p.desc||''; $('fStack').value = (p.stack||[]).join(', ');
-    $('fLive').value = p.live||''; $('fCode').value = p.code||'';
-    updatePreview();
-    window.scrollTo({ top:0, behavior:'smooth' });
-  };
-
-  window.delItem = function(i){
-    if(confirm('Hapus proyek "'+(projects[i].title||'')+'"?')){ projects.splice(i,1); save(); render(); toast('Proyek dihapus'); }
-  };
-
-  window.moveUp = function(i){
-    if(i<=0) return;
-    [projects[i-1], projects[i]] = [projects[i], projects[i-1]];
-    save(); render(); toast('Urutan diubah');
-  };
-
-  function updatePreview(){
-    const url = $('fImage').value.trim();
-    $('imgPreview').innerHTML = url ? `<img src="${escapeHtml(url)}" class="mt-2 rounded-lg max-h-32 border border-line" onerror="this.style.display='none'">` : '';
-  }
-  $('fImage').addEventListener('input', updatePreview);
+  document.getElementById('btnCancel').addEventListener('click', resetForm);
 
   // Export
-  $('btnExport').addEventListener('click', ()=>{
-    const blob = new Blob([JSON.stringify(projects, null, 2)], { type:'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'projects.json'; a.click();
-    URL.revokeObjectURL(a.href);
-    toast('projects.json di-download');
+  document.getElementById('btnExport').addEventListener('click', () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(projects, null, 2));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", "projects.json");
+    dlAnchor.click();
   });
 
   // Import
-  $('fileImport').addEventListener('change', e=>{
-    const file = e.target.files[0]; if(!file) return;
+  document.getElementById('fileImport').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
     const reader = new FileReader();
-    reader.onload = ()=>{
+    reader.onload = (event) => {
       try {
-        const data = JSON.parse(reader.result);
-        const arr = Array.isArray(data) ? data : (data.projects||[]);
-        if(!Array.isArray(arr)) throw new Error();
-        projects = arr; save(); render(); resetForm(); toast('Berhasil diimpor: '+arr.length+' proyek');
-      } catch(err){ toast('File tidak valid'); }
+        const parsed = JSON.parse(event.target.result);
+        projects = Array.isArray(parsed) ? parsed : (parsed.projects || []);
+        saveLocal();
+        renderList();
+        alert('File JSON berhasil diimport!');
+      } catch (err) {
+        alert('Format file JSON tidak valid!');
+      }
     };
     reader.readAsText(file);
-    e.target.value = '';
   });
 
-  // Muat dari website (projects.json yang sedang live)
-  $('btnLoadCurrent').addEventListener('click', ()=>{
-    fetch('projects.json', { cache:'no-store' })
-      .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
-      .then(data=>{ const arr = Array.isArray(data)?data:(data.projects||[]); projects = arr; save(); render(); resetForm(); toast('Dimuat dari website: '+arr.length+' proyek'); })
-      .catch(()=> toast('Tidak bisa memuat (jalankan via hosting/live server)'));
+  document.getElementById('btnLoadCurrent').addEventListener('click', () => {
+    if (confirm('Muat ulang data dari file projects.json? Perubahan lokal yang belum di-export akan tertimpa.')) {
+      loadFromFetch();
+    }
   });
 
-  // Reset
-  $('btnReset').addEventListener('click', ()=>{
-    if(confirm('Hapus SEMUA proyek dari editor ini? Tindakan ini tidak bisa dibatalkan.')){ projects = []; save(); render(); resetForm(); toast('Semua proyek dihapus'); }
+  document.getElementById('btnReset').addEventListener('click', () => {
+    if (confirm('Reset seluruh daftar proyek ke default?')) {
+      projects = DEFAULTS;
+      saveLocal();
+      renderList();
+      resetForm();
+    }
   });
 
-  // Init: localStorage dulu, kalau kosong coba projects.json
-  load();
-  if(!projects.length){
-    fetch('projects.json', { cache:'no-store' })
-      .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
-      .then(data=>{ const arr = Array.isArray(data)?data:(data.projects||[]); if(arr.length){ projects = arr; save(); render(); } })
-      .catch(()=>{});
+  // Theme Toggle
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function setTheme(isDark) {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      themeIcon.textContent = '☀️ Light';
+      localStorage.setItem('portfolio-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeIcon.textContent = '🌙 Dark';
+      localStorage.setItem('portfolio-theme', 'light');
+    }
   }
-  render();
+
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    setTheme(!isCurrentlyDark);
+  });
+
+  init();
 </script>
 </body>
 </html>
